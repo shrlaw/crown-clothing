@@ -4,7 +4,7 @@ import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyApUajledXS0ThdWNy3bbsc_pzsjTSX_TQ",
+    apiKey: process.env.API_KEY,
     authDomain: "crown-clothing-db-59a86.firebaseapp.com",
     projectId: "crown-clothing-db-59a86",
     storageBucket: "crown-clothing-db-59a86.appspot.com",
@@ -15,13 +15,16 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
     prompt: "select_account"
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => 
+    signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+    signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
 
